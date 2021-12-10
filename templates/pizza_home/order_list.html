@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+
+<!-- Main Body -->
+{% block content %}
+
+    <!-- <h1>All Orders List</h1> -->
+
+    <div class="container">
+
+        <div class="row d-flex justify-content-between">
+            <div class="col-7 py-3">
+                <h3>Order List</h3>
+            </div>
+            <div class="col-2 py-3 d-flex justify-content-end">
+                <a href="{% url 'pizza_home:homepage' %}" 
+                    class="text-white btn btn-lg btn-primary" 
+                    style="min-width: 7rem; text-decoration: none;">
+                    Select Pizza
+                </a>
+            </div>
+        </div>
+
+
+        <div style="margin: 5rem 0 10rem 0;">
+
+            <table class="table table-hover table-striped mb-0">
+                <thead>
+                    <tr>
+                        <th scope="col">Order ID#</th>
+                        <th scope="col">Pizza</th>
+                        <th scope="col">Date Purchased</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Total</th>
+                        <th scope="col" 
+                            class="text-center">View Detail</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for o in orders %}
+                    <tr>
+                        <th scope="row"
+                            class="py-4">{{ o.order_id }}</th>
+                        <td class="py-4">{{ o.pizza }}</td>
+                        <td class="py-4">{{ o.date }}</td>
+                        <td class="py-4">
+                            <span class="badge bg-info m-0 py-2 statusCol" id="statusCol_{{o.order_id}}">
+                                {{ o.status }}
+                            </span>
+                        </td>
+                        <td class="py-4">{{ o.amount }}</td>
+                        <td class="text-center py-4">
+                            <a href="{% url 'pizza_home:order' o.order_id %}"
+                                class="btn btn-primary btn-sm">
+                                View
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="6" class="text-center">
+                            Total Orders: <b> {{ total_order_num }} </b>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <!-- Pagination -->
+            {% if orders.has_other_pages %}
+                <!-- Lorem ipsum dolor sit amet. -->
+
+                <nav aria-label="Page navigation" class="mt-3">
+                    <ul class="pagination">
+                        <!-- Previous sign symbol -->
+                        {% if orders.has_previous %}
+                            <li class="page-item">
+                                <a href="?page={{ orders.previous_page_number }}" 
+                                    class="page-link"
+                                    style="text-decoration: none;">
+                                    &nbsp; &laquo; &nbsp;
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled">
+                                <a href="#" 
+                                    class="page-link text-muted">
+                                    <span>
+                                        &nbsp; &laquo; &nbsp;
+                                    </span>
+                                </a>
+                            </li>
+                        {% endif %}
+
+                        <!-- All page numbers -->
+                        {% for pg in orders.paginator.page_range %}
+                            {% if orders.number == pg %}
+                                <li class="page-item active">
+                                    <a href="#" class="page-link">
+                                        <span style="font-weight: bold;">
+                                            &nbsp; {{ pg }} &nbsp;
+                                        </span>
+                                    </a>
+                                </li>
+                            {% else %}
+                                <li class="page-item">
+                                    <a href="?page={{ pg }}" class="page-link">
+                                        <span style="font-weight: bold;">
+                                            &nbsp; {{ pg }} &nbsp;
+                                        </span>
+                                    </a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                        
+                        <!-- Next sign symbol -->
+                        {% if orders.has_next %}
+                            <li class="page-item">
+                                <a href="?page={{ orders.next_page_number }}" 
+                                    class="page-link"
+                                    style="text-decoration: none;">
+                                    &raquo; &nbsp;&nbsp;
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled">
+                                <a href="#" 
+                                    class="page-link text-muted">
+                                    <span>
+                                        &raquo; &nbsp;&nbsp;
+                                    </span>
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+
+            {% endif %}
+        </div>
+
+
+    </div>
+
+{% endblock %}

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+{% extends 'accounts/auth_base.html' %}
+{% load static %}
+
+<!-- Page Title -->
+{% block title %} {{ title }} {% endblock %}
+
+
+<!-- Custom Stylesheet -->
+{% block stylesheet %} 
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="{% static 'css/accounts/regForm_style.css' %}">
+    <!-- Form Validation Error -->
+    <link rel="stylesheet" href="{% static 'css/accounts/includes/form_validation_error.css' %}">
+{% endblock %}
+
+
+
+<!-- Main Body Content -->
+{% block content %}
+
+    <div class="container-fluid" id="container">
+
+        <div class="row d-flex justify-content-center">
+            <div class="col-7">
+                <div id="form-holder">
+                    <form method="POST" class="p-5" id="form">
+                        {% csrf_token %}
+                        <h2 class="form-title text-center mb-5"
+                            style="user-select: none;">Customer Login</h2>
+
+                        {% if messages %}
+                            {% for msg in messages %}
+                                <div id="errorDiv">
+                                    <div class="row m-0 p-0">
+                                        <div class="col-1" id="outer-holder">
+                                            <div class="outer" id="outer">
+                                                <div class="inner">
+                                                <label>Close</label>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        <div class="col d-flex flex-row">
+                                            <p>{{ msg }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+
+
+                        <div class="row mb-3">
+                            <div class="col">
+                                <!-- <input type="email" class="form-control" id="email1" placeholder="Email"> -->
+                                {{ loginForm.email }}
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col">
+                                <!-- <input type="password" class="form-control" id="password" placeholder="Enter Password"> -->
+                                {{ loginForm.password }}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <button type="submit" class="btn btn-primary" id="submit-btn">Login</button>
+                        </div>
+
+                        <p id="loginhere">
+                            Don't have an account? <a href="{% url 'userAuth:registration' %}" class="loginhere-link">Register Here</a>
+                        </p>
+
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}
+
+
+
+<!-- Custom JS -->
+{% block js %} 
+
+    <script src="{% static 'js/accounts/includes/form_validation_error.js' %}"></script>
+
+{% endblock %}

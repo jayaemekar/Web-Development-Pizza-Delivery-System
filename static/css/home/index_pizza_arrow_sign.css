@@ -1,0 +1,35 @@
+.arrow{
+    /* position: absolute; */
+	/* top: 50%; */
+	width: 5vmin;
+	height: 5vmin;
+	background: transparent;
+	border-top: 0.5vmin solid rgb(77, 77, 77);
+	border-right: 0.5vmin solid rgb(77, 77, 77);
+	box-shadow: 0 0 0 lightgray;
+	transition: all 200ms ease;
+}
+
+
+.left {
+    transform: translate3d(-50px,0,0) rotate(-135deg);
+    -webkit-transform: translate3d(-50px,0,0) rotate(-135deg);
+}
+
+.left:hover {
+    border-color: orange;
+    box-shadow: 0.5vmin -0.5vmin 0 rgb(77, 77, 77);
+    cursor: pointer;
+}
+
+
+.right {
+    transform: translate3d(50px,0,0) rotate(45deg);
+    -webkit-transform: translate3d(50px,0,0) rotate(45deg);
+}
+
+.right:hover {
+    border-color: orange;
+    box-shadow: 0.5vmin -0.5vmin 0 rgb(77, 77, 77);
+    cursor: pointer;
+}

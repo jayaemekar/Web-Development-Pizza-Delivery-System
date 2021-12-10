@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+<!-- Font Awesome Icon Library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+{% block content %}
+    <br><br><br>
+    <div class="container">
+        <div class="row justify-content-center">
+            <!-- Pizza Detail Card -->
+            <div class="col-5" style="width: 23rem;">
+                <img src="{{ pizza.image.url }}" class="card-img-top" alt="pizza-image">
+                <div class="card-body">               
+                    <p class="card-text">Pizza Id: {{ pizza.id }}</p>
+                    <p class="card-text">Pizza Name: {{ pizza.name }}</p>
+                    <p class="card-text">Price: ${{ pizza.price }}</p>
+
+                </div>               
+            </div>
+            <div class="col-6">
+                <h3 class="fst-italic">Customer Reviews</h3>
+                <style>
+                    .checked {
+                      color: orange;
+                    }
+                </style>
+                <p class="card-text">Pizza Rating :{{ pizza.description }}
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star"></span></p>
+
+                <h5 class="fst-italic text-primary">Yogesh says</h5>
+                <p class="bg-light">It was an awesome pizza. best for price.</p>
+                
+                <h5 class="fst-italic text-danger">John says</h5>
+                <p class="bg-light">Not bad for the price. I enjoyed their free home delivery.</p>
+
+                <h5 class="fst-italic text-success ">Mon says</h5>
+                <p class="bg-light">Definitely new competition for Domino's pizza.
+                     They should introduce referral links to refer friends. 
+                     Can't wait to get that discount for me.</p>
+
+                <h5 class="fst-italic text-warning">Jazz says</h5>
+                <p class="bg-light">One stop shop for the pizza. 
+                    So sad I have to wait for the weekend to order it as 
+                    I will be out of town until then.</p>
+            </div>
+            <div class="col-2">
+                <a href="/order_list/" onclick="createOrder('{{pizza.id}}')"
+                    class="text-white btn btn-lg btn-primary px-5"               
+                    >
+                    OrderNow
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+<!-- Custom JS -->
+{% block js %} 
+
+    <!-- Axios CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- c -->
+    <script src="{% static 'js/index_api.js' %}"></script>
+
+
+    
+{% endblock %}

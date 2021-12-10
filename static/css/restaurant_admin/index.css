@@ -1,0 +1,36 @@
+#heading{
+    color: rgb(4, 36, 95);
+    margin: 1rem 0 5rem 0;
+}
+#pizza_delivery, #pizza_list{
+    background-color: rgb(204, 197, 231);
+    padding: 3rem;
+    border-radius: 1rem;
+    cursor: pointer;
+}
+#col-left, #col-right{
+    height: 30rem;
+}
+#pizza_delivery:hover > #pizza_delivery_img, 
+#pizza_list:hover > #pizza_list_img {
+    width: 410px;
+    height: 410px;
+}
+
+#pizza_delivery_logo_caption, #pizza_list_logo_caption{
+    margin-top: 3rem;
+    border-radius: 1rem;
+}
+
+#caption1, #caption2{
+    margin-top: 0.5rem;
+}
+
+
+#pizza_delivery_img, #pizza_list_img{
+    width: 400px;
+    height: 400px;
+    transition: 0.05s all linear;
+}
+
+

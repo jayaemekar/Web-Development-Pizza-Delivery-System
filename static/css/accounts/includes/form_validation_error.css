@@ -1,0 +1,79 @@
+#errorDiv{
+    border: 1px solid rgb(111, 149, 255);
+    border-radius: 10px;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+#errorDiv p{
+    margin-top: 1rem;
+}
+
+
+/* Stylish Close Button */
+#outer-holder{
+    border: 1px solid rgb(173, 111, 255);
+    border-radius: 10px 0 0 10px;
+    background-color: rgb(111, 145, 255);
+}
+
+.outer {
+    position: relative;
+    margin: auto;
+    width: 70px;
+    margin-top: 0.3rem;
+    cursor: pointer;
+}
+
+.inner {
+    width: inherit;
+    text-align: center;
+}
+
+label { 
+    font-size: .6em; 
+    line-height: 4.5em;
+    text-transform: uppercase;
+    color: rgb(0, 0, 0);
+    transition: all .3s ease-in;
+    opacity: 0;
+    cursor: pointer;
+    margin-left: -0.9rem;
+}
+
+.inner:before, .inner:after {
+    position: absolute;
+    content: '';
+    height: 0.1rem;
+    width: 2.5rem;
+    background: #000000;
+    left: 0.5rem;
+    transition: all .3s ease-in;
+}
+
+.inner:before {
+    top: 50%; 
+    transform: rotate(45deg);  
+}
+
+.inner:after {  
+    bottom: 50%;
+    transform: rotate(-45deg);  
+}
+
+.outer:hover label {
+    opacity: 1;
+}
+
+.outer:hover .inner:before,
+.outer:hover .inner:after {
+    transform: rotate(0);
+}
+
+.outer:hover .inner:before {
+    top: 0;
+}
+
+.outer:hover .inner:after {
+    bottom: 0;
+}

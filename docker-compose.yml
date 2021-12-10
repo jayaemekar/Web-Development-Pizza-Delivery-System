@@ -1,0 +1,24 @@
+#adapted from example in docker documentation
+services:
+  web:
+    restart: always
+    build: .
+    volumes:
+       - .:/code
+    ports:
+       - 8000:8000
+   #  user: 1000:1000 ## needed for linux
+    expose:
+       - 8000
+    user: 1002:1003 ## needed for linux
+    command: python manage.py runserver 0.0.0.0:8000
+
+  nginx:
+   restart: always
+   build: ./nginx/
+   depends_on:
+      - web
+   ports:
+      - 80:80
+   links:
+      - web:web

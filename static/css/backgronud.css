@@ -1,0 +1,94 @@
+.container {
+    font-family: 'Open Sans', sans-serif;
+    max-width: 60% !important;
+}
+
+body {
+    background-image: url("pizza.jpg");
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+.wrapper {
+    text-align: center;
+}
+
+.new-button {
+    margin-bottom: 25px;
+    margin-top: -5px;
+
+}
+
+
+::-webkit-scrollbar-track {
+    width: 5px;
+    background: #f5f5f5;
+}
+
+::-webkit-scrollbar-thumb {
+    width: 1em;
+    background-color: #ddd;
+    outline: 1px solid slategrey;
+    border-radius: 1rem;
+}
+
+.text-small {
+    font-size: 0.9rem;
+}
+
+.messages-box,
+.chat-box {
+    height: 510px;
+    overflow-y: scroll;
+}
+
+.rounded-lg {
+    border-radius: 0.5rem;
+}
+
+input::placeholder {
+    font-size: 0.9rem;
+    color: #999;
+}
+
+h3 {
+    color: white !important;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.btn-submit {
+    margin-bottom: 3%;
+    margin-left: 90%;
+}
+
+label {
+    margin-bottom: -1.5rem;
+    margin-top: 1rem;
+}
+
+.text-center {
+    margin-top: 1rem;
+}
+
+.form-control:disabled {
+    background-color: #fff !important;
+}
+
+#messageScreen {
+    font-family: 'Open Sans', sans-serif;
+    padding-left: 5px;
+    padding-right: 5px;
+    height: 400px !important;
+    min-height: 400px !important;
+    max-height: 400px !important;
+    overflow-y: auto;
+    padding-top: 10px;
+}
+
+.ml-auto {
+    margin-right: 10px;
+}

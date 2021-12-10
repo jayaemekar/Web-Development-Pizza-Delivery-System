@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+{% block content %}
+
+    <div class="container">
+
+        <div class="row d-flex justify-content-between">
+            <div class="col-7 py-3">
+                <h3 class="fst-italic" >Order Status Update</h3>
+            </div>
+            <div class="col-2 py-3 d-flex justify-content-end">
+                <a href="{% url 'restaurant_admin:restaurantBackendOrderStatus' %}" class="text-white btn btn-lg btn-primary" 
+                    style="min-width: 7rem; text-decoration: none;">
+                    View Order List
+                </a>
+            </div>
+        </div>
+
+        <div class="container mb-5 pt-5 py-5">
+            <div class="row d-flex justify-content-between">
+                <div class="col align-items-center">
+                    <!-- Order Detail Card -->
+                    <div class="card shadow border pb-2" 
+                        style="width: 100%; margin-left: -1rem;">
+                        <img src="{{ order.pizza.image.url }}" class="card-img-top" alt="pizza-image">
+                        <div class="card-body">
+                            <h5 class="card-title">Order Id: {{ order.order_id }}</h5>
+                            <p class="card-text mt-5">Pizza Name: {{ order.pizza }}</p>
+                            <p class="card-text">Username: {{ user_full_name }}</p>
+                            <p class="card-text">Price: {{ order.amount }}</p>
+                            <p class="card-text">Status: {{ order.status }}</p>
+                            <p class="card-text">Order Date: {{ order.date }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col d-flex align-items-center">
+                    <form method="POST" 
+                        class="p-5 container bg-light border border-warning rounded">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col mx-0 my-5">
+                                <label class="fs-3"> 
+                                    Change Order Status:
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row m-0 p-0">
+                            <div class="col fs-4 m-0 p-0 d-flex align-items-center">
+                                {{ orderForm.status }}
+                            </div>
+                        </div>
+                        <div class="row mt-5">
+                            <div class="col d-flex justify-content-end">
+                                <button type="submit"
+                                    class="btn btn-danger">Apply Change</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+{% endblock %}

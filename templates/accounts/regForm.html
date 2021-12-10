@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+{% extends 'accounts/auth_base.html' %}
+{% load static %}
+<!-- Page Title -->
+{% block title %} {{ title }} {% endblock %}
+
+<!-- Custom Stylesheet -->
+{% block stylesheet %} 
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="{% static 'css/accounts/regForm_style.css' %}">
+{% endblock %}
+
+<!-- Main Body Content -->
+{% block content %}
+
+    <div class="container-fluid" id="container">
+
+        <div class="row d-flex justify-content-center">
+            <div class="col-7">
+                <div id="form-holder">
+                    <form method="POST" class="p-5" id="form">
+                        {% csrf_token %}
+                        <h2 class="form-title text-center mb-5"
+                            style="user-select: none;">Personal Information</h2>
+
+                        <div class="row mb-3">
+                            <div class="col">
+                                {{ registerForm.first_name }}
+                            </div>
+                            <div class="col">
+                                {{ registerForm.last_name }}
+                            </div>
+                        </div>                
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                {{ registerForm.email }}
+                            </div>
+                            <div class="col">
+                                {{ registerForm.gender }}
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col">
+                                {{ registerForm.password1 }}
+                            </div>
+                            <div class="col">
+                                {{ registerForm.password2 }}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <button type="submit" class="btn btn-primary" id="submit-btn">Create Account</button>
+                        </div>
+                        
+                        <p id="loginhere">
+                            Already have an account? <a href="{% url 'userAuth:login' %}" class="loginhere-link">Log in</a>
+                        </p>
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+{% endblock %}

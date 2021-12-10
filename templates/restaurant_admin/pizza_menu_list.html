@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+    <div class="container">
+
+        <div class="row mt-3 mb-5 d-flex justify-content-between">
+            <div class="col-7 py-3">
+                <h3 class="fst-italic" >Pizza Menu List</h3>
+            </div>
+            <div class="col-2 py-3 d-flex justify-content-end">
+                <a href="{% url 'restaurant_admin:createPizzaRecord' %}" 
+                    class="text-white btn btn-lg btn-primary" 
+                    style="min-width: 15rem; text-decoration: none;">
+                    Create New Pizza
+                </a>
+            </div>
+        </div>
+
+        <table class="table table-hover table-striped"
+                style="margin: 2rem 0 5rem 0;">
+                <thead>
+                    <tr>
+                        <th scope="col">ID#</th>
+                        <th scope="col">Pizza</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Created At</th>
+                        <th scope="col">Updated At</th>
+                        <th scope="col" 
+                            class="text-center">View Detail</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for pizz in pizzas %}
+                    <tr>
+                        <th scope="row"
+                            class="py-4">{{ forloop.counter }}</th>
+                        <td class="py-4">
+                            <a href="{% url 'restaurant_admin:updatePizzaRecord' pizz.id %}">
+                            {{ pizz.name }}</a>
+                        </td>
+                        <td class="py-4">{{ pizz.price }}</td>
+                        <td class="py-4">{{ pizz.created_at }}</td>
+                        <td class="py-4">{{ pizz.updated_at }}</td>
+                        <td class="text-center py-4">
+                            <a href="{% url 'restaurant_admin:updatePizzaRecord' pizz.id %}"
+                                class="btn btn-primary btn-sm px-4">
+                                View
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="6" class="text-center">
+                            Total Orders: <b> {{ total_pizza_num }} </b>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+
+    </div>
+
+{% endblock %}

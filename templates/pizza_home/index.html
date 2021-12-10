@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+
+
+<!-- Custom Stylesheet -->
+{% block stylesheet %} 
+    <!-- Pizza Nav-Arrow -->
+    <link rel="stylesheet" href="{% static 'css/home/index_pizza_arrow_sign.css' %}">
+    
+{% endblock %}
+
+
+<!-- Main Body -->
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col py-3 d-flex justify-content-center">
+                <a href="{% url 'pizza_home:order_list' %}" 
+                    class="text-white btn btn-lg btn-primary px-5">
+                    View Orders
+                </a>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="chatroom/" 
+                    class="text-white btn btn-lg btn-primary px-5"               
+                    >
+                    Chat Room
+                </a>
+            </div>
+        </div>
+
+        <!-- IMPORTANT NOTES -->
+        <!-- <small class="text-danger mb-5">
+            Adding order-record into <b>DB</b> using API, and the API is getting called using a 
+            <b>JS function in this page</b>. <br/>
+            For posting data to the backend using API, <b>Axios</b> is used in the JS function 
+            (<b>"createOrder()"</b>).
+        </small> -->
+
+        <div class="row mt-5 pt-sm-0">
+            
+            {% for p in pizzas %}
+            <div class="col-lg-3 col-md-4 col-sm-6 mb-grid-gutter my-4" >
+                <div class="card product-card shadow border pb-2">
+                    <a 
+                    href="/show_pizza_record/{{p.name}}"
+                    class="d-block" data-toggle="modal">
+                        <img src="{{ p.image.url }}" alt="Pizza" class="card-img-top">
+                    </a>
+                    <div class="card-body pt-1 pb-2">
+                        <h4 class="card-title pt-3">{{ p.name }}</h4>
+                        <small>Pizza Id: {{ p.id }}</small>
+    
+                        <div class="d-flex align-item-center justify-content-between mt-4">
+                            <div class="product-price d-flex align-item-center">
+                                <span class="text-accent mt-2"> ${{ p.price }}</span>
+                            </div>
+                            <!-- The pizza.id will be passed using the using the 'axios.post' method -->
+                            <button class="btn btn-primary btn-md" type="button" data-toggle="toast" data-target="#cart-toast"
+                            href="/order_list/" onclick="createOrder('{{p.id}}')">
+                                    
+                                <span class="px-2">
+                                    <span class="mr-2 fw-bold">+</span>
+                                    <i class="fas fa-shopping-cart ml-2"></i>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+    
+        </div>
+        
+        <!-- Pagination -->
+        <!-- Pizza list arrow navigation -->
+        <div class="row py-3 d-flex justify-content-center align-items-center">
+            <!-- Left Arrow Sign -->
+            {% if pizzas.has_other_pages %}
+                <div class="col-1 mx-2 d-flex justify-content-center align-items-center">
+                    {% if pizzas.has_previous %}
+                        <i class="arrow left"
+                            onclick="location.href='?page={{ pizzas.previous_page_number }}'"></i>
+                    {% else %}
+                        <i class="arrow left disabled"></i>
+                    {% endif %}
+                </div>
+
+                <!-- Right Arrow Sign -->
+                <div class="col-1 mx-2 d-flex justify-content-center align-items-center">
+                    {% if pizzas.has_next %}
+                        <i class="arrow right"
+                            onclick="location.href='?page={{ pizzas.next_page_number }}'"></i>
+                    {% else %}
+                        <i class="arrow right disabled"></i>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+
+    </div>
+
+{% endblock %}
+
+
+<!-- Custom JS -->
+{% block js %} 
+
+    <!-- Axios CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- c -->
+    <script src="{% static 'js/index_api.js' %}"></script>
+
+
+    
+{% endblock %}

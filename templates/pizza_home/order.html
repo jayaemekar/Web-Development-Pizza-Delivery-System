@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <div class="container mb-5 pb-5">
+
+        <div class="row">
+            <div class="col py-3 d-flex justify-content-end">
+                <a href="{% url 'pizza_home:order_list' %}" 
+                    class="text-white btn btn-lg btn-primary px-5" 
+                    style="min-width: 7rem; text-decoration: none;">
+                    View Orders
+                </a>
+            </div>
+        </div>
+
+        <h3 class="mb-3">Order Id - {{ order.order_id }}</h3>
+        <p> <b>Price &nbsp ${{ order.amount }}</b> </p>
+        <span class="badge bg-primary mt-3" id="status"> {{ order.status }} </span>
+        <div class="progress my-4">
+            <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+
+        <!-- Order Detail Card -->
+        <div class="card mt-5 shadow border pb-2" style="width: 23rem;">
+            <img src="{{ order.pizza.image.url }}" class="card-img-top" alt="pizza-image">
+            <div class="card-body">
+                <h5 class="card-title">Order Id: {{ order.order_id }}</h5>
+                <p class="card-text mt-5">Pizza Name: {{ order.pizza }}</p>
+                <p class="card-text">Price: ${{ order.amount }}</p>
+                <p class="card-text">Order Date: {{ order.date }}</p>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}
+
+
+
+<!-- Custom JS -->
+{% block js %} 
+
+    <script>
+
+        var order_id = '{{ order.order_id }}';  
+
+       // var url = 'ws://127.0.0.1:8080/ws/pizza/' + order_id;
+        
+        var url = 'ws://34.67.236.28/ws/pizza/' + order_id;
+        
+        let socket = new WebSocket(url);
+
+        socket.onopen = function (e) {
+            console.log('Frontend Websocket: Connection Established!');
+        }
+        socket.onmessage = function (e) {
+            var data = JSON.parse(e.data);
+            var status = data.payload.status;
+            var progress = data.payload.progress;
+            increaseProgress(status, progress);
+        }
+
+        socket.onclose = function (e) {
+            console.log('Frontend Websocket: Connection Closed!');
+        }
+
+        function increaseProgress(statusParam, progressParam) {
+
+            var status_html = document.querySelector('#status');
+            var progressBar_html = document.querySelector('.progress-bar');
+            status_html.innerHTML = statusParam;    // manipulating DOM-elem
+            progressBar_html.style.width = progressParam + "%";     // manipulating DOM-elem
+
+            if (progressParam == 100) {
+                status_html.classList.remove('bg-primary');
+                progressBar_html.classList.remove('bg-primary');
+
+                status_html.classList.add('bg-success');
+                progressBar_html.classList.add('bg-success');
+            }else{
+                status_html.classList.remove('bg-success');
+                progressBar_html.classList.remove('bg-success');
+
+                status_html.classList.add('bg-primary');
+                progressBar_html.classList.add('bg-primary');
+            }
+        }
+    </script>
+
+{% endblock %}

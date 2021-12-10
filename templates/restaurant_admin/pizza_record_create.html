@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+
+<!-- Main Body -->
+{% block content %}
+    <br>
+    <div class="container">
+
+        <div class="row d-flex justify-content-between">
+            <div class="col-7 py-3">
+                <h3 class="fst-italic" >Create New Pizza Record</h3>
+            </div>
+            <div class="col-2 py-3 d-flex justify-content-end">
+                <a href="{% url 'restaurant_admin:pizzaRecords' %}" class="text-white btn btn-lg btn-primary" 
+                    style="min-width: 15rem; text-decoration: none;">
+                    View Pizza List
+                </a>
+            </div>
+        </div>
+
+        <form method="POST" enctype="multipart/form-data"
+            class="bg-light p-5 border border-warning rounded"
+            style="margin: 5rem 0;">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label class="form-label">{{ pizzaForm.name.label_tag }}</label>
+                {{ pizzaForm.name }}
+            </div>
+            <div class="mb-3">
+                <label class="form-label">{{ pizzaForm.price.label_tag }}</label>
+                {{ pizzaForm.price }}
+            </div>
+            <div style="margin: 2.5rem 0;">
+                {{ pizzaForm.image }}
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+    </div>
+
+{% endblock %}

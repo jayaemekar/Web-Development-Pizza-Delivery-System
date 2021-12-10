@@ -1,0 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+
+body{
+    background-color: rgb(251, 209, 160);
+}
+
+#page-bgc-heading{
+    color: rgba(104, 104, 104, 0.281);
+    position: absolute;
+    right: 10px;
+    top: 8rem;
+    z-index: -1;
+    font-family: 'Poppins', sans-serif;
+    font-size: 170px;
+}
+
+#container{
+    background-color: rgba(255, 255, 255, 0);
+    font-family: Poppins;
+}
+
+#form-holder{
+    margin: 16rem 0;
+    background-color: rgba(119, 119, 119, 0);
+}
+
+#form{
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.75);
+}
+
+#submit-btn{
+    margin-top: 1.5rem;
+}
+
+#loginhere{
+    text-align: center;
+    color: #888;
+    margin-top: 2rem;
+}
+
+.loginhere-link {
+    color: #1da0f2;
+    text-decoration: none; 
+}
+.loginhere-link:hover {
+    text-decoration: underline; 
+}

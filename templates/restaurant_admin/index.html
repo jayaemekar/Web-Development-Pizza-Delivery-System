@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+
+<!-- Custom Stylesheet -->
+{% block stylesheet %} 
+    <link rel="stylesheet" href="{% static 'css/restaurant_admin/index.css' %}">
+{% endblock %}
+
+
+{% block content %} 
+
+    <div class="container">
+
+        <h1 class="fst-italic text-center" 
+            id="heading">Admin Home Page</h3>
+    
+        <div class="row justify-content-center">
+            <div class="col d-flex align-items-center" id="col-left"
+                onclick="redirect_order_list();">
+                <div class="d-block" id="pizza_delivery">
+                     <div class="row bg-warning" id="pizza_delivery_logo_caption">
+                        <div class="d-flex justify-content-center">
+                            <h4 id="caption1">Pizza Orders</h4>
+                        </div>
+                    </div>
+                    <img src="{% static 'image/pizza_delivery.png' %}" alt="Pizza Order" id="pizza_delivery_img" /> 
+                  
+                </div>
+            </div>
+            <div class="col d-flex align-items-center" id="col-right"
+                onclick="redirect_pizza_list();">
+                <div class="d-block" id="pizza_list">
+                    
+                    <div class="row bg-warning" id="pizza_list_logo_caption">
+                        <div class="d-flex justify-content-center">
+                            <h4 id="caption2">Pizza List</h4>
+                        </div>
+                    </div>
+                    <img src="{% static 'image/pizza.png' %}" alt="Pizza" id="pizza_list_img" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <br><br><br><br>
+{% endblock %}
+
+{% block js %} 
+
+    <script>
+        function redirect_order_list() {
+            url = "{% url 'restaurant_admin:restaurantBackendOrderStatus' %}";
+            window.location.href = url;
+        }
+
+        function redirect_pizza_list() {
+            url = "{% url 'restaurant_admin:pizzaRecords' %}";
+            window.location.href = url;
+        }
+    </script>
+
+{% endblock %}

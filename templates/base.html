@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+<head >
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cal Pizza Delivery System</title>
+    
+    <!-- Favicon & Touch Icons -->
+    <link rel="icon" href="{% static 'favicon.png' %}" type="image/png">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   
+    <!-- Custom Stylesheet -->
+    {% block stylesheet %} 
+    
+    {% endblock %}
+
+    
+</head>
+
+<body class="d-flex flex-column min-vh-100" >
+    <!-- Header/ Nav-bar -->
+    <header class="navbar px-3 d-flex justify-content-center " style="background-color: #010d18;">
+        <div class=" col d-flex justify-content-start  row container-fluid">
+            <div class=" col d-flex justify-content-start  col py-2">
+                <a href="{% url 'pizza_home:homepage' %}" class="navbar-brand">
+                    <h1 style="font-family:Brush Script MT;font-weight: 900 ">
+                        Cal Pizza Delivery System</h1>        
+                  </a>
+            </div>
+            
+            <div class="text-primary col d-flex justify-content-center  col py-2">
+                <h4 class="d-block ">
+                    Welcome {{ user }}!
+                    
+                    <!-- <span class="mt-4 bg-secondary d-flex justify-content-center align-items-center">Lorem, ipsum.</span> -->
+                    <span class="badge bg-primary mt-4 d-flex justify-content-center align-items-center"
+                        style="padding: 0.3rem 0; width: 10rem; margin: 0 auto;">
+                        {% if not user.is_staff %}
+                            {% if not user.is_admin %}
+                                {% if not user.is_superuser %}
+                                    Customer
+                                {% endif %}
+                            {% endif %}
+                        {% else %}
+                            Admin
+                        {% endif %}
+                    </span>
+                </h4>
+            </div>
+            <div class="col py-4 d-flex justify-content-end">
+                <a href="/about/" class="btn btn-primary"> About</a>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="/contactus/" class="btn btn-primary"> Contact Us</a>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="{% url 'userAuth:logout' %}" class="btn btn-danger"
+                    style="padding: 0.5rem 1.5rem;">Logout</a>
+            </div>
+
+        </div>
+    </header>
+    
+    <!-- Main Body Content -->
+    {% block content %} {% endblock %}
+
+    <!-- Footer -->
+    <footer class="shadow footer text-center mt-auto" style="background-color: #011629;">
+        <p class="text-white">copyright:JayaaEmekar@2021</p>
+    </footer>
+
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <!-- Font Awesome Icons -->
+    <script src="https://kit.fontawesome.com/a03027e6f6.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="{% static 'js/myvue.js' %}"></script>
+    <!-- Custom JS -->
+    {% block js %} {% endblock %}
+</body>
+
+</html>
