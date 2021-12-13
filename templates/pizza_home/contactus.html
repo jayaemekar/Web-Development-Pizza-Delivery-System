@@ -3,17 +3,45 @@
 {% block title %} Contact Us {% endblock %}
 
 {% block content %}
+<body>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/home/style_contactus.css' %}"/>
+</body>
+<div class="container">
+	<div style="text-align:center">
+	  <h2>Contact Us</h2>
+	  <p>We love to have a pizza with you, leave us a message:</p>
+	</div>
+	<div class="row">
+	  <div class="column">
+		<img src="{% static 'image/pizza.png' %}"style="width:100%">
+	  </div>
+	  <div class="column">
+		  
+		<form method="POST" enctype="multipart/form-data"
+                    class="bg-light p-3 border border-warning rounded">
+					{% csrf_token %}
+		  <label for="fname">First Name</label>
+		  <input type="text" id="fname" name="firstname" placeholder="Your name..">
+		  <label for="lname">Last Name</label>
+		  <input type="text" id="lname" name="lastname" placeholder="Your last name..">
+		  <label for="reason">Reason</label>
+		  <select id="reason" name="reason">
+			<option value="Improvement">Improvement</option>
+			<option value="Suggestion">Suggestion</option>
+			<option value="Experience">Experience</option>
+		  </select>
+		  <label for="subject">Subject</label>
+		  <textarea id="subject" name="subject" placeholder="Write something.." style="height:170px"></textarea>
+		  <input type="submit" value="Submit"onclick="myFunction()" >
+		</form>
+	  </div>
+	</div>
+  </div>
 
-<div class="container mt-4">
-	<div class="text-center mt-2">
-	    <h2><span class="badge bg-primary ">Contact Us</span></h2>
-      <h4 class="fst-italic">Hello, {{user}}!<br></h4>
-      <p class="fst-italic">For any queries please drop an email. Please find contact details as below</p>
-	  <p class="fst-italic">Email : calpizzadeliverysystem.com</p>
-	  </p>
-   </div>
-</div>
-
-
+  <script>
+	function myFunction() {
+	  alert("Thank you contacting the Cal Pizza Delivery System!");
+	}
+	</script>
 
 {% endblock %}
