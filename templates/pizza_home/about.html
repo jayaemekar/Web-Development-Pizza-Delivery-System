@@ -3,20 +3,65 @@
 {% block title %} Menu {% endblock %}
 
 {% block content %}
-
-<div class="container mt-4">
-	<div class="text-center mt-2">
-	    <h2><span class="badge bg-primary ">About Cal Pizza Delivery System</span></h2>
-      <h1 class="fst-italic">Hello, {{user}}!<br></h1>
-	  <p class="fst-italic">At Cal Pizza Delivery System, we don’t just make pizza. 
-		  We make people happy. Cal Pizza Delivery System was built on the belief that pizza night should be special,
-		   and we carry that belief into everything we do. With more than 60 years of experience under our belts, 
-		   we understand how to best serve our customers through tried and true service principles. 
-		   We create food we’re proud to serve and deliver it fast, with a smile.</p>
-	  </p>
-   </div>
-</div>
-
+<body>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/home/style_about.css' %}"/>
+</body>
+<div class="about-section">
+	<h1 class="fst-italic">Hello, {{user}}!<br></h1>
+	<p>At Cal Pizza Delivery System, we don’t just make pizza. 
+		We make people happy. Cal Pizza Delivery System was built on the belief that pizza night should be special,
+		 and we carry that belief into everything we do. With more than 60 years of experience under our belts, 
+		 we understand how to best serve our customers through tried and true service principles. 
+		 We create food we’re proud to serve and deliver it fast, with a smile.</p>
+  </div>
+  
+  <h2 style="text-align:center">Our Team</h2>
+  <div class="row">
+	<div class="column">
+	  <div class="card">
+		<img src="{% static 'image/Team1.jpg' %}" alt="Jane" style="width:100%">
+		<div class="container">
+		  <h2>Jane Doe</h2>
+		  <p class="title">CEO & Founder</p>
+		  <p></p>
+		  <br>
+		  <p><button class="button">Contact</button></p>
+		  <p>jane@calpizzadelivery.com</p>
+		  
+		</div>
+	  </div>
+	</div>
+  
+	<div class="column">
+	  <div class="card">
+		<img src="{% static 'image/Team3.jpg' %}" alt="Mike" style="width:100%">
+		<div class="container">
+		  <h2>Mike Ross</h2>
+		  <p class="title">Head Chef</p>
+		  <p></p>
+		  <br>
+		  <p><button class="button">Contact</button></p>
+		  <p>mike@calpizzadelivery.com</p>
+		  
+		</div>
+	  </div>
+	</div>
+  
+	<div class="column">
+	  <div class="card">
+		<img src="{% static 'image/Team2.jpg' %}" alt="John" style="width:100%">
+		<div class="container">
+		  <h2>John Doe</h2>
+		  <p class="title">Operation Manager</p>
+		  <p></p>
+		  <br>
+		  <p><button class="button">Contact</button></p>
+		  <p>john@calpizzadelivery.com</p>
+		  
+		</div>
+	  </div>
+	</div>
+  </div>
 
 
 {% endblock %}
