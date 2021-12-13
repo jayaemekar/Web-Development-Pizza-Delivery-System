@@ -129,3 +129,46 @@ def order_status_handler(sender, instance, created, **kwargs):
 
 def random_string_generator(size=12, chars=string.ascii_lowercase + string.digits):
     return ''.join(random.choice(chars) for _ in range(size))
+
+string_format_3 = '{0} - {1} - {2}'
+
+class Review(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    restaurant = models.ForeignKey(Pizza, on_delete=models.CASCADE)
+
+    rate = models.IntegerField(default=0)
+    description = models.CharField(max_length=255)
+
+    def get_comments(self):
+        return self.comment_set.filter(reply=None)
+
+    def __str__(self):
+        return string_format_3.format(self.restaurant, self.description, self.user)
+
+
+class LikeForReview(models.Model):
+    # similar to composite primary key
+    review = models.ForeignKey(Review, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+
+
+# Note: one user can leave comment on one review many times
+class Comment(models.Model):
+    # many comments to one review
+    review = models.ForeignKey(Review, on_delete=models.CASCADE)
+
+    # many comments to one user
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+
+    description = models.CharField(max_length=255)
+
+    reply = models.ForeignKey('Comment', null=True, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return string_format_3.format(self.review, self.description, self.user)
+
+
+class LikeForComment(models.Model):
+    # similar to composite primary key
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)

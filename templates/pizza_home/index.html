@@ -7,7 +7,12 @@
 {% block stylesheet %} 
     <!-- Pizza Nav-Arrow -->
     <link rel="stylesheet" href="{% static 'css/home/index_pizza_arrow_sign.css' %}">
-    
+    <link rel="stylesheet" type="text/css" href="{% static 'css/home/style_review.css' %}"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+    integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 {% endblock %}
 
 
@@ -28,14 +33,6 @@
                 </a>
             </div>
         </div>
-
-        <!-- IMPORTANT NOTES -->
-        <!-- <small class="text-danger mb-5">
-            Adding order-record into <b>DB</b> using API, and the API is getting called using a 
-            <b>JS function in this page</b>. <br/>
-            For posting data to the backend using API, <b>Axios</b> is used in the JS function 
-            (<b>"createOrder()"</b>).
-        </small> -->
 
         <div class="row mt-5 pt-sm-0">
             
@@ -64,6 +61,17 @@
                                     <i class="fas fa-shopping-cart ml-2"></i>
                                 </span>
                             </button>
+                        </div>
+
+                        <div class="restaurant-content mt-1 mb-3">
+                            <p><i class="far fa-comment-dots"></i> <span id="review-count-{{p.id}}"></span> reviews</p>
+                            <div id="avg-rate-{{p.id}}" class="my-test-div" data-star-review-id="{{p.id}}">
+                                <span id="single-review-span-star-1" class="fa fa-star-o unchecked" data-star-id="1"></span>
+                                <span id="single-review-span-star-2" class="fa fa-star-o unchecked" data-star-id="2"></span>
+                                <span id="single-review-span-star-3" class="fa fa-star-o unchecked" data-star-id="3"></span>
+                                <span id="single-review-span-star-4" class="fa fa-star-o unchecked" data-star-id="4"></span>
+                                <span id="single-review-span-star-5" class="fa fa-star-o unchecked" data-star-id="5"></span>
+                            </div>                           
                         </div>
                     </div>
                 </div>
@@ -108,10 +116,58 @@
 
     <!-- Axios CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-    <!-- c -->
+    <script src="https://code.jquery.com/jquery-3.3.1.js"
+    integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    
     <script src="{% static 'js/index_api.js' %}"></script>
 
-
+    <script type="text/javascript">       
+        $(document).ready(function () {
+            function getReviewAndRating(id) {
+                $.ajax({
+                    url: "{% url 'pizza_home:restaurant_rate' %}",
+                    type: "GET",
+                    // dataType: "json",
+                    data: {
+                        'restaurant_id': id,
+                    },
+                    success: function (data) {
+                        $("#review-count-" + id).text(data.review_count);
+                        $("#avg-rate-" + id).each((idx, elem) => {
+                            let rate = Math.floor(data.avg_rate);
+                            let arr = [];
+                            arr.push($(elem).children("#single-review-span-star-1"));
+                            arr.push($(elem).children("#single-review-span-star-2"));
+                            arr.push($(elem).children("#single-review-span-star-3"));
+                            arr.push($(elem).children("#single-review-span-star-4"));
+                            arr.push($(elem).children("#single-review-span-star-5"));
     
+                            let i = 0;
+                            for (i = 0; i < arr.length; i++) {
+                                if (i < rate) {
+                                    arr[i].removeClass("unchecked").addClass("checked");
+                                    arr[i].removeClass("fa-star-o").addClass("fa-star");
+                                } else {
+                                    arr[i].removeClass("checked").addClass("unchecked");
+                                    arr[i].removeClass("fa-star").addClass("fa-star-o");
+                                }
+                            }
+                        });
+                    },
+                    error: function (jqXHR, textStatus) {
+                        console.log(jqXHR);
+                        console.log("something wrong...");
+                    },
+                });
+            }
+    
+            $("div.my-test-div").each((idx, elem) => {
+                let rId = parseInt(elem.getAttribute("data-star-review-id"));
+                getReviewAndRating(rId);
+            });
+        });
+    
+    </script>
 {% endblock %}
+
+

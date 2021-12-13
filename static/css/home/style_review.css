@@ -1,0 +1,71 @@
+span.checked {
+  color: orange;
+}
+
+span.unchecked {
+  color: skyblue;
+}
+
+.btn-borderless {
+  font-family: Arial, Helvetica, sans-serif;
+  border: none;
+  background: none;
+}
+
+.heart-gray {
+  color: gray;
+}
+
+.heart-red {
+  color: red;
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+
+.italic-gray-cite {
+  color: black !important;
+  font-style: italic;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.p-large {
+  font-size: 20px;
+  word-break: break-all;
+}
+
+.p-mid {
+  font-size: 18px;
+  word-break: break-all;
+}
+
+.p-small {
+  font-size: 14px;
+  word-break: break-all;
+}
+
+.d-display-none {
+  display: none;
+}
+
+.my-container {
+  position: relative;
+}
+
+.transparent-content {
+  position: absolute;
+  /* Position the background text */
+  top: 0;
+  /* At the bottom. Use top:0 to append it to the top */
+  /* background: rgb(255,255,255); Fallback color */
+  background: rgba(255, 255, 255, 0.5);
+  /* color: black; */
+  width: 100%;
+  /* Full width */
+}

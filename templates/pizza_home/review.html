@@ -1,0 +1,258 @@
+
+{% load static %}
+
+<div class="col-md-6 my-review-comment-div">
+    <ul id="ul-review" class="list-group list-group-flush">
+        {% for review in reviews %}
+        <li class="list-group-item">
+            <blockquote class="blockquote">
+                <p class="mb-0 p-large"><cite class="italic-gray-cite">{{review.user.username}}</cite></p>
+                <p class="mb-0 p-large">{{review.description}}</p>
+                <div class="my-test-div" data-single-review-star="{{review.rate}}">
+                    <span id="single-review-span-star-1" class="fa fa-star-o unchecked" data-star-id="1"></span>
+                    <span id="single-review-span-star-2" class="fa fa-star-o unchecked" data-star-id="2"></span>
+                    <span id="single-review-span-star-3" class="fa fa-star-o unchecked" data-star-id="3"></span>
+                    <span id="single-review-span-star-4" class="fa fa-star-o unchecked" data-star-id="4"></span>
+                    <span id="single-review-span-star-5" class="fa fa-star-o unchecked" data-star-id="5"></span>
+                </div>
+                <footer class="p-large">
+                    <button class="btn btn-sm btn-borderless btn-sg-show-comment-content">
+                        <i class="far fa-comment-dots"></i>
+                        <span>{{review.comment_set.count}} View</span>
+                    </button>
+                    {% if user.is_authenticated %}
+                    <button class="btn btn-sm btn-borderless btn-sg-show-comment-textbox"
+                        data-textbox-id="comment-for-review-{{review.id}}">
+                        <i class="fa fa-reply"></i>
+                        <span>Comment</span>
+                    </button>
+                   
+                    <button class="btn btn-sm btn-sg-Review btn-borderless" data-review-id="{{review.id}}"
+                        data-preference="0" type="button">
+                        <i class="fa fa-heart heart-red"></i>
+                        <span>Like</span>
+                    </button>
+                    
+                    {% endif %}
+                    <span class="btn-sm btn-borderless" disabled>{{review.likeforreview_set.count}} people found
+                        this review helpful</span>
+                </footer>
+
+                <div class="replied-comments container pl-5 d-display-none">
+                    {% for comment in review.get_comments %}
+                    <p class=" mb-0 p-mid"><cite class="italic-gray-cite">{{comment.user.username}}</cite></p>
+                    <p class="mb-0 p-mid">{{comment.description}}</p>
+                    <footer class="italic-gray-footer p-mid">
+                        <button class="btn btn-sm btn-borderless btn-sg-show-reply-content">
+                            <i class="far fa-comment-dots"></i>
+                            <span>{{comment.comment_set.count}} View</span>
+                        </button>
+                        {% if user.is_authenticated %}
+                        <button class="btn btn-sm btn-borderless btn-sg-show-reply-textbox"
+                            data-textbox-id="reply-for-comment-{{comment.id}}">
+                            <i class="fa fa-reply"></i>
+                            <span>Reply</span>
+                        </button>
+                        
+                        <button class="btn btn-sm btn-sg-Comment btn-borderless" data-comment-id="{{comment.id}}"
+                            data-comment-preference="0" type="button">
+                            <i class="fa fa-heart heart-red"></i>
+                            <span>Like</span>
+                        </button>
+                        
+                        {% endif %}
+                    </footer>
+
+                    <div class="replied-comments container pl-5 d-display-none">
+                        {% for reply in comment.comment_set.all %}
+                        <p class="mb-0 p-small"><cite class="italic-gray-cite">{{reply.user.username}}</cite></p>
+                        <p class="mb-0 p-small">{{reply.description}}</p>
+
+                        {% endfor %}
+                    </div>
+                    <input id="reply-for-comment-{{comment.id}}"
+                        class="form-control input-sm text-box-comment d-display-none"
+                        data-textbox-review-id="{{review.id}}" data-textbox-comment-id="{{comment.id}}"
+                        placeholder="default reply" type="text">
+                    <br />
+                    {% endfor%}
+                </div>
+                <input id="comment-for-review-{{review.id}}"
+                    class="form-control input-sm text-box-comment d-display-none" data-textbox-review-id="{{review.id}}"
+                    placeholder="default comment" type="text">
+            </blockquote>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+
+
+<script>
+    $(".text-box-comment").keypress(function (event) {
+        let keycode = (event.keyCode ? event.keyCode : event.which);
+        let self = $(this);
+        let description = $(this).val();
+        let review_id = $(this).attr("data-textbox-review-id");
+        let comment_id = $(this).attr("data-textbox-comment-id");
+
+        if (comment_id == undefined) {
+            comment_id = "";
+        }
+
+        // when press enter key
+        if (keycode == '13') {
+            $.ajax({
+                type: "GET",
+                url: "{% url 'pizza_home:comment_create' %}",
+                // dataType: "json",
+                data: {
+                    "review_id": review_id,
+                    "comment_id": comment_id,
+                    "description": description,
+                },
+                success: function (data) {
+                    
+                        // refresh the div
+                        $(".my-review-comment-div").parent().html(data);
+                        // clear the content
+                        self.val("");
+
+                        let tempDiv = self.parent().children(".replied-comments");
+                        tempDiv.toggle();
+                    
+                },
+                error: function (jqXHR, status) {
+                    console.log(jqXHR)
+                },
+            });
+        }
+    });
+
+    $(".btn-sg-Review").click(function () {
+        let review_id = $(this).attr("data-review-id").toString();
+        // [0]: unlike [1]:like
+        let review_preference = $(this).attr("data-preference").toString();
+
+        // keep the pointer of button object
+        let self = $(this);
+        let red = "heart-red";
+        let gray = "heart-gray";
+
+        // communicate with server
+        $.ajax({
+            url: '{% url "pizza_home:like_review" %}',
+            type: 'GET',
+            data: {
+                'review_id': review_id,
+                'preference': review_preference,
+            },
+            // dataType: 'json',
+            success: function (data) {
+
+                
+                    // $("#my-review-div").html(data);
+                    // self.val("");
+                    let count = data.count;
+                    let display_content = `${count} people found this review helpful`;
+
+                    console.log(this);
+                    if (review_preference == "0") {
+                        self.attr("data-preference", "1");
+                        self.children("i").removeClass(red).addClass(gray);
+                        self.parent().children("span").text(display_content);
+                    } else if (review_preference == "1") {
+                        self.attr("data-preference", "0");
+                        self.children("i").removeClass(gray).addClass(red);
+                        self.parent().children("span").text(display_content);
+                    }
+                    console.log(self);
+                
+            },
+            error: function (jqXHR, textStatus) {
+                console.log(jqXHR);
+                console.log('something wrong');
+            },
+        });
+    });
+
+    $(".btn-sg-Comment").click(function () {
+        let comment_id = $(this).attr("data-comment-id").toString();
+        let comment_preference = $(this).attr("data-comment-preference").toString();
+
+        // keep the pointer of button object
+        let self = $(this);
+        let red = "heart-red";
+        let gray = "heart-gray";
+
+        $.ajax({
+            type: "GET",
+            dataType: "json",
+            url: "{% url 'pizza_home:like_comment' %}",
+            data: {
+                "comment_id": comment_id,
+                "preference": comment_preference,
+            },
+            success: function (data) {
+                console.log(this);
+                if (comment_preference == "0") {
+                    self.attr("data-comment-preference", "1");
+                    self.children('i').removeClass(red).addClass(gray);
+                } else if (comment_preference == "1") {
+                    self.attr("data-comment-preference", "0");
+                    self.children('i').removeClass(gray).addClass(red);
+                }
+                console.log(self);
+            },
+            error: function (jqXHR, textStatus) {
+                console.log(jqXHR);
+            },
+        });
+    });
+
+    $(document).ready(function () {
+        $("div.my-test-div").each((idx, elem) => {
+            let rate = parseInt(elem.getAttribute("data-single-review-star"));
+
+            let arr = [];
+            arr.push($(elem).children("#single-review-span-star-1"));
+            arr.push($(elem).children("#single-review-span-star-2"));
+            arr.push($(elem).children("#single-review-span-star-3"));
+            arr.push($(elem).children("#single-review-span-star-4"));
+            arr.push($(elem).children("#single-review-span-star-5"));
+
+            let i = 0;
+            for (i = 0; i < arr.length; i++) {
+                if (i < rate) {
+                    arr[i].removeClass("unchecked").addClass("checked");
+                    arr[i].removeClass("fa-star-o").addClass("fa-star");
+                } else {
+                    arr[i].removeClass("checked").addClass("unchecked");
+                    arr[i].removeClass("fa-star").addClass("fa-star-o");
+                }
+            }
+        });
+    });
+
+    $(".btn-sg-show-comment-textbox").click(function () {
+        console.log($(this));
+
+        let textbox_id = $(this).attr("data-textbox-id");
+        $("#" + textbox_id).toggle().focus();
+
+    });
+
+    $(".btn-sg-show-reply-textbox").click(function () {
+        console.log($(this));
+        let textbox_id = $(this).attr("data-textbox-id");
+        console.log(textbox_id);
+        $("#" + textbox_id).toggle().focus();
+    });
+
+    $(".btn-sg-show-comment-content").click(function () {
+        $(this).parent().parent().children('.replied-comments').toggle();
+    });
+
+    $(".btn-sg-show-reply-content").click(function () {
+        $(this).parent().parent().children('.replied-comments').toggle();
+    });
+</script>
