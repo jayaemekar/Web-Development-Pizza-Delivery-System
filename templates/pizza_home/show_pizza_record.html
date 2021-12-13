@@ -16,31 +16,26 @@ integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="ano
 integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-<div class="container-fluid">
-    <div class="row justify-content-md-center">
-        <div class="col-md-6">
-            <div class="text-center">
-                <h1>              
-                    <a href="/order_list/" onclick="createOrder('{{pizza.id}}')"
-                        class="text-white btn btn-lg btn-primary px-5">
-                        Order {{ pizza.name}} 
-                    </a>
-                </h1>
-                <input type="hidden" id="hidden-restaurant-id" value="{{pizza.id}}">
-            </div>
-        </div>
-    </div>
-
-
-    <div class="row justify-content-md-center">
-
-        <div class="col-md-4">
+<div class="container">
+    <div class="row justify-content-center">
+        <!-- Pizza Detail Card -->
+        <div class="col-5" style="width: 23rem;">
+            <img src="{{ pizza.image.url }}" class="card-img-top" alt="pizza-image">
             <div class="card-body">               
-                <p class="card-text">Pizza Id: {{ pizza.id }}</p>
+                <p class="card-text" >Pizza Id: {{ pizza.id }}</p>
                 <p class="card-text">Pizza Name: {{ pizza.name }}</p>
                 <p class="card-text">Price: ${{ pizza.price }}</p>
-        
-            </div>
+                
+                
+                    <a href="/order_list/" onclick="createOrder('{{pizza.id}}')"
+                        class="text-white btn btn-lg btn-primary px-5"> Order Now
+                    </a>
+                
+            </div>               
+        </div>
+        <div class="col-6">
+            <input type="hidden" id="hidden-restaurant-id" value="{{pizza.id}}">
+            <h2>Customer Reviews </h2>
             <p><i class="far fa-comment-dots"></i>
                 No. of reviews:
                 <span id="span-review-count">{{reviews.count}}</span>
@@ -49,45 +44,36 @@ integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zF
                 Average Rating:
                 <button class="btn btn-sm btn-dark" disabled id="span-avg-rate">{{avg_rate}}</button>
             </p>
-        </div>
-    </div>
 
-
-    <div class="row justify-content-md-center">
-        <div class="col-md-6">
-            <img src="{{ pizza.image.url }}" class="center rounded" alt="restaurant image">
-        </div>
-    </div>
-    <br />
-
-    <!-- new review place -->
-    <div class="row justify-content-md-center" style="background:rgba(255,255,255,0.5);">
-        <div class="col-md-4">
-            <div class="form-group">
-                <label for="textarea-review">Review</label>
-                <textarea class="form-control rounded-0" id="textarea-review" rows="3"
-                    placeholder="Write something here..."></textarea>
+                <!-- new review place -->
+            <div  style="background:rgba(255,255,255,0.5);">
+                    <div class="form-group">
+                        <label for="textarea-review">Review</label>
+                        <textarea class="form-control rounded-0" id="textarea-review" rows="3"
+                            placeholder="Write something here..."></textarea>
+            </div>
+            <div >
+                <span id="span-star-1" class="span-star fa fa-star-o unchecked" data-star-id="1"></span>
+                <span id="span-star-2" class="span-star fa fa-star-o unchecked" data-star-id="2"></span>
+                <span id="span-star-3" class="span-star fa fa-star-o unchecked" data-star-id="3"></span>
+                <span id="span-star-4" class="span-star fa fa-star-o unchecked" data-star-id="4"></span>
+                <span id="span-star-5" class="span-star fa fa-star-o unchecked" data-star-id="5"></span>
+                <input type="hidden" id="hidden-total-star" value="0">
+                <br><br>
+                <button class="text-white btn btn-lg btn-primary px-5" id="btn-post-review" type="button">Post Review</button>
             </div>
         </div>
-        <div class="col-md-2">
-            <br />
-            <br />
-            <span id="span-star-1" class="span-star fa fa-star-o unchecked" data-star-id="1"></span>
-            <span id="span-star-2" class="span-star fa fa-star-o unchecked" data-star-id="2"></span>
-            <span id="span-star-3" class="span-star fa fa-star-o unchecked" data-star-id="3"></span>
-            <span id="span-star-4" class="span-star fa fa-star-o unchecked" data-star-id="4"></span>
-            <span id="span-star-5" class="span-star fa fa-star-o unchecked" data-star-id="5"></span>
-            <input type="hidden" id="hidden-total-star" value="0">
-            <br />
-            <button class="btn" id="btn-post-review" type="button">Post Review</button>
+            <!-- review and comment -->
+            <div id="my-review-div" >
+                {% include 'pizza_home/review.html' %}
+            </div>
         </div>
-    </div>
-
-    <!-- review and comment -->
-    <div id="my-review-div" class="row justify-content-md-center">
-        {% include 'pizza_home/review.html' %}
+        
     </div>
 </div>
+
+
+
 
 {% block javascript %}
 <script>
@@ -130,7 +116,7 @@ integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zF
         });
 
         $("#btn-post-review").click(function (event) {
-            alert("test");
+           
             let self = $(this);
             let restaurant_id = $("#hidden-restaurant-id").val();
             let description = $("#textarea-review").val();
