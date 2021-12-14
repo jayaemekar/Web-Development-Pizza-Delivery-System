@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} Order Confirmation {% endblock %}
+
+
+
+{% block content %}
+<br><br>
+    <div class="container">
+        <div class="row justify-content-center">
+            
+            <!-- Pizza Detail Card -->
+            <div class="col-7" >
+                <h1>Your Order Placed Successfully!</h1>
+                <h2> Please pay ${{ pizza.price }} cash to our delivery partner</h2><br>
+                <h3>Order Details: </h3>
+                <img src="{{ pizza.image.url }}" class="card-img-top" alt="pizza-image">
+                <div class="card-body">               
+                    <p class="card-text">Pizza Id: {{ pizza.id }}</p>
+                    <p class="card-text">Pizza Name: {{ pizza.name }}</p>
+                    <p class="card-text">Price: ${{ pizza.price }}</p>
+                </div>               
+            </div>
+
+            <div class="col-4">
+                <a href="/order_list/" class="text-white btn btn-lg btn-primary px-5" >
+                    Track Your Order
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+<!-- Custom JS -->
+{% block js %} 
+
+    <!-- Axios CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- c -->
+    <script src="{% static 'js/index_api.js' %}"></script>
+
+
+    
+{% endblock %}

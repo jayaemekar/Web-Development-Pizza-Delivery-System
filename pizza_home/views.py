@@ -136,6 +136,29 @@ def show_pizza_record(request,name):
     }
     return render(request , 'pizza_home/show_pizza_record.html',context)
 
+@login_required(login_url='userAuth:login')
+@stop_restaurant_staff
+def show_payment(request,id):
+    try:
+        user = request.user
+        user = user.get_full_name()
+    except:
+        user = 'Anonymous User'
+
+    pizza = Pizza.objects.filter(id=id).first()
+  
+    reviews = Review.objects.filter(restaurant=pizza).order_by("-pk")
+
+    avg_rate = average_rating(reviews)
+    context = {
+        'user': user,
+        'pizza': pizza,
+        'id': id,
+        'reviews': reviews,
+        'avg_rate': avg_rate,
+    }
+    return render(request , 'pizza_home/show_payment.html',context)
+
 @csrf_exempt
 @stop_restaurant_staff
 def order_pizza(request):
