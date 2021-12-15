@@ -1,9 +1,8 @@
 {% extends "base.html" %}
 {% load static %}
-{% block title %} Restaurant {% endblock %}
+{% block title %} Show Pizza Record {% endblock %}
 {% block content %}
-<br />
-<br />
+<br><br>
 
 <link rel="stylesheet" type="text/css" href="{% static 'css/home/style_review.css' %}"/>
 <script src="https://code.jquery.com/jquery-3.3.1.js"
@@ -67,8 +66,10 @@ integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zF
                 <span id="span-star-5" class="span-star fa fa-star-o unchecked" data-star-id="5"></span>
                 <input type="hidden" id="hidden-total-star" value="0">
                 <br><br>
-                <button class="text-white btn btn-lg btn-primary px-5" onClick="window.location.href=window.location.href"
+                
+                <button class="text-white btn btn-lg btn-primary px-5" 
                         id="btn-post-review" type="button">Post Review</button>
+                    
             </div>
         </div>
             <!-- review and comment -->
@@ -190,6 +191,7 @@ integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zF
                 error: function (jqXHR, status) {
                     console.log(jqXHR)
                 },
+                
             });
         });
     });

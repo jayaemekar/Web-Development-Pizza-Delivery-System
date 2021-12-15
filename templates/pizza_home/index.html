@@ -44,26 +44,24 @@
                     class="d-block" data-toggle="modal">
                         <img src="{{ p.image.url }}" alt="Pizza" class="card-img-top">
                     </a>
-                    <div class="card-body pt-1 pb-2">
-                        <h4 class="card-title pt-3">{{ p.name }}</h4>
-                        
+                    <div  class="card-body pt-1 pb-2">
+                        <a 
+                            href="/show_pizza_record/{{p.name}}"
+                         class="card-title pt-3"><h4>{{ p.name }}</h4>
+                        </a>
     
                         <div class="d-flex align-item-center justify-content-between mt-4">
                             <div class="product-price d-flex align-item-center">
                                 <span class="text-accent mt-2"> Price: ${{ p.price }}</span>
                             </div>
-                            <!-- The pizza.id will be passed using the using the 'axios.post' method -->
-                              
-                             <a href="/show_payment/{{p.id}}/" class="btn btn-primary btn-md" 
-                             type="button" data-toggle="toast" data-target="#cart-toast"                            
-                             onclick="createOrder('{{p.id}}')"> 
+
+                             <a href="/show_pizza_record/{{p.name}}" class="btn btn-primary btn-md" 
+                             type="button" data-toggle="toast" data-target="#cart-toast"> 
                              <span class="px-1">
                                 <span class="mr-1 fw-bold">+</span>
                                 <i class="fas fa-shopping-cart ml-1"></i>
                             </span>
-                            </a>
-                             
-                            
+                            </a>                           
                             </button>
                         </div>
 
@@ -77,10 +75,16 @@
                                 <span id="single-review-span-star-5" class="fa fa-star-o unchecked" data-star-id="5"></span>
                             </div>                           
                         </div>
+                        <a href="/show_pizza_record/{{p.name}}" class="text-white btn btn-lg btn-primary px-5"  >
+                            View Details</a>
                     </div>
                 </div>
             </div>
+           
+            
             {% endfor %}
+
+            
     
         </div>
         
