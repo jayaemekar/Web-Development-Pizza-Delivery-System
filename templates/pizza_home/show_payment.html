@@ -5,25 +5,29 @@
 
 
 {% block content %}
-<br><br>
+<br>
     <div class="container">
         <div class="row justify-content-center">
             
             <!-- Pizza Detail Card -->
-            <div class="col-7" >
+            <div class="col-9" >
                 <h1>Your Order Placed Successfully!</h1>
-                <h2> Please pay ${{ pizza.price }} cash to our delivery partner</h2><br>
-                <h3>Order Details: </h3>
-                <img src="{{ pizza.image.url }}" class="card-img-top" alt="pizza-image">
-                <div class="card-body">               
-                    <p class="card-text">Pizza Id: {{ pizza.id }}</p>
-                    <p class="card-text">Pizza Name: {{ pizza.name }}</p>
-                    <p class="card-text">Price: ${{ pizza.price }}</p>
-                </div>               
+                <h3>Please pay ${{ pizza.price }} cash to our delivery partner on pizza delivery !!</h3><br>
+                <h4>Pizza Order Details: </h4>
+                <div class="col-5 bg-light p-3 border border-warning rounded" style="width: 23rem;">
+                    <img src="{{ pizza.image.url }}" class="card-img-top" alt="pizza-image">
+                    <div class="card-body">               
+                        <p class="card-text">Pizza Id: {{ pizza.id }}</p>
+                        <p class="card-text">Pizza Name: {{ pizza.name }}</p>
+                        <p class="card-text">Price: ${{ pizza.price }}</p>
+                    </div>               
+                </div>
+                <br>
+                <h3>Total Amount Due: ${{ pizza.price }}</h3><br>
             </div>
-
-            <div class="col-4">
-                <a href="/order_list/" class="text-white btn btn-lg btn-primary px-5" >
+            
+            <div class="col-3">
+                <a href="/order_list/" class="text-white btn btn-lg btn-primary" >
                     Track Your Order
                 </a>
             </div>

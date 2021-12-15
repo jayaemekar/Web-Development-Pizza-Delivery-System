@@ -308,7 +308,7 @@ def comment_create(request):
 
         review = Review.objects.filter(id=review_id).first()
 
-        if comment_id is not "":
+        if comment_id != "":
             comment = Comment.objects.filter(id=comment_id).first()
         else:
             comment = None

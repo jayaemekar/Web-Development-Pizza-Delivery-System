@@ -28,7 +28,14 @@ integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zF
                 
                 
                     <a href="/show_payment/{{pizza.id}}/"onclick="createOrder('{{pizza.id}}')"
-                        class="text-white btn btn-lg btn-primary px-5"> Order Now
+                        class="text-white btn btn-lg btn-primary"
+                        style="min-width: 7rem; text-decoration: none;"> Order Now
+                    </a>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="{% url 'pizza_home:homepage' %}" 
+                    class="text-white btn btn-lg btn-primary" 
+                    style="min-width: 7rem; text-decoration: none;">
+                    Select Pizza
                     </a>
                 
             </div>               
@@ -60,7 +67,8 @@ integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zF
                 <span id="span-star-5" class="span-star fa fa-star-o unchecked" data-star-id="5"></span>
                 <input type="hidden" id="hidden-total-star" value="0">
                 <br><br>
-                <button class="text-white btn btn-lg btn-primary px-5" id="btn-post-review" type="button">Post Review</button>
+                <button class="text-white btn btn-lg btn-primary px-5" onClick="window.location.href=window.location.href"
+                        id="btn-post-review" type="button">Post Review</button>
             </div>
         </div>
             <!-- review and comment -->
